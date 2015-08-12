@@ -22,7 +22,7 @@
  *           may also work on international versions (currently reports total values only)
  *
  *  History:
- *      
+ *
  *  2014-06-13: Massive OverHaul
  *              - Fixed Configuration (original had byte order of bitstrings backwards
  *              - Increased reporting frequency to 10s - note that values won't report unless they change
@@ -30,10 +30,10 @@
  *                the defaults).
  *              - Added support for Volts & Amps monitoring (was only Power and Energy)
  *              - Added flexible tile display. Currently only used to show High and Low values since last
- *                reset (with time stamps). 
+ *                reset (with time stamps).
  *              - All tiles are attributes, so that their values are preserved when you're not 'watching' the
  *                meter display
- *              - Values are formatted to Strings in zwaveEvent parser so that we don't lose decimal values 
+ *              - Values are formatted to Strings in zwaveEvent parser so that we don't lose decimal values
  *                in the tile label display conversion
  *              - Updated fingerprint to match Aeon Home Energy Monitor v2 deviceId & clusters
  *              - Added colors for Watts and Amps display
@@ -48,18 +48,18 @@
  *              - Fixed "Unexpected Error" on Refresh tile - (added Refresh Capability)
  *              - Cleaned up low values - reset to ridiculously high value instead of null
  *              - Added poll() command/capability (just does a refresh)
- *              
+ *
  *  2014-09-19   GUI Tweaks, HEM v1 alterations (from Brock Haymond)
  *              - Reworked all tiles for look, color, text formatting, & readability
  */
 metadata {
     // Automatically generated. Make future change here.
     definition (
-        name: "Aeon HEMv2", 
+        name: "Aeon HEMv2",
         namespace: "smartthings",
         category: "Green Living",
         author: "Barry A. Burke"
-    ) 
+    )
     {
         capability "Energy Meter"
         capability "Power Meter"
@@ -68,31 +68,31 @@ metadata {
         capability "Refresh"
         capability "Polling"
         capability "Battery"
-        
+
         attribute "energy", "string"
         attribute "power", "string"
         attribute "volts", "string"
         attribute "amps", "string"
-        
+
         attribute "energyDisp", "string"
         attribute "energyOne", "string"
         attribute "energyTwo", "string"
-        
+
         attribute "powerDisp", "string"
         attribute "powerOne", "string"
         attribute "powerTwo", "string"
-        
+
         attribute "voltsDisp", "string"
         attribute "voltsOne", "string"
         attribute "voltsTwo", "string"
-        
+
         attribute "ampsDisp", "string"
         attribute "ampsOne", "string"
-        attribute "ampsTwo", "string"        
-        
+        attribute "ampsTwo", "string"
+
         command "reset"
         command "configure"
-        
+
 // v1       fingerprint deviceId: "0x2101", inClusters: " 0x70,0x31,0x72,0x86,0x32,0x80,0x85,0x60"
 
         fingerprint deviceId: "0x3101", inClusters: "0x70,0x32,0x60,0x85,0x56,0x72,0x86"
@@ -113,17 +113,17 @@ metadata {
 
     // tile definitions
     tiles {
-    
+
     // Watts row
 
         valueTile("powerDisp", "device.powerDisp") {
             state (
-                "default", 
-                label:'${currentValue}', 
+                "default",
+                label:'${currentValue}',
                 foregroundColors:[
                     [value: 1, color: "#000000"],
                     [value: 10000, color: "#ffffff"]
-                ], 
+                ],
                 foregroundColor: "#000000",
                 backgroundColors:[
                     [value: "0 Watts",      color: "#153591"],
@@ -131,16 +131,16 @@ metadata {
                     [value: "1000 Watts",   color: "#90d2a7"],
                     [value: "1500 Watts",   color: "#44b621"],
                     [value: "2000 Watts",  color: "#f1d801"],
-                    [value: "2500 Watts",  color: "#d04e00"], 
-                    [value: "3000 Watts",  color: "#bc2323"] 
+                    [value: "2500 Watts",  color: "#d04e00"],
+                    [value: "3000 Watts",  color: "#bc2323"]
                     /*
                     [value: "0 Watts",      color: "#153591"],
                     [value: "3000 Watts",   color: "#1e9cbb"],
                     [value: "6000 Watts",   color: "#90d2a7"],
                     [value: "9000 Watts",   color: "#44b621"],
                     [value: "12000 Watts",  color: "#f1d801"],
-                    [value: "15000 Watts",  color: "#d04e00"], 
-                    [value: "18000 Watts",  color: "#bc2323"]  
+                    [value: "15000 Watts",  color: "#d04e00"],
+                    [value: "18000 Watts",  color: "#bc2323"]
                     */
                 ]
             )
@@ -153,20 +153,20 @@ metadata {
         }
 
     // Power row
-    
+
         valueTile("energyDisp", "device.energyDisp") {
             state("default", label: '${currentValue}', backgroundColor:"#ffffff")
         }
         valueTile("energyOne", "device.energyOne") {
             state("default", label: '${currentValue}', backgroundColor:"#ffffff")
-        }        
+        }
         valueTile("energyTwo", "device.energyTwo") {
             state("default", label: '${currentValue}', backgroundColor:"#ffffff")
         }
-        
-    
+
+
     // Volts row
-    
+
         valueTile("voltsDisp", "device.voltsDisp") {
             state "default", label: '${currentValue}', backgroundColors:[
                 [value: "115.6 Volts",  color: "#bc2323"],
@@ -182,9 +182,9 @@ metadata {
         valueTile("voltsTwo", "device.voltsTwo", decoration: "flat") {
             state "default", label:'${currentValue}'
         }
-    
+
     // Amps row
-    
+
         valueTile("ampsDisp", "device.ampsDisp") {
             state "default", label: '${currentValue}' , foregroundColor: "#000000", color: "#000000", backgroundColors:[
                 [value: "0 Amps",   color: "#153591"],
@@ -192,9 +192,9 @@ metadata {
                 [value: "50 Amps",  color: "#90d2a7"],
                 [value: "75 Amps",  color: "#44b621"],
                 [value: "100 Amps", color: "#f1d801"],
-                [value: "125 Amps", color: "#d04e00"], 
+                [value: "125 Amps", color: "#d04e00"],
                 [value: "150 Amps", color: "#bc2323"]
-            ] 
+            ]
         }
         valueTile("ampsOne", "device.ampsOne", decoration: "flat") {
             state "default", label:'${currentValue}'
@@ -202,9 +202,9 @@ metadata {
         valueTile("ampsTwo", "device.ampsTwo", decoration: "flat") {
             state "default", label:'${currentValue}'
         }
-    
+
     // Controls row
-    
+
         standardTile("reset", "device.energy", inactiveLabel: false) {
             state "default", label:'reset', action:"reset", icon: "st.Health & Wellness.health7"
         }
@@ -249,11 +249,11 @@ def parse(String description) {
 
 def zwaveEvent(physicalgraph.zwave.commands.meterv1.MeterReport cmd) {
 //  log.debug "zwaveEvent received ${cmd}"
-    
+
     def dispValue
     def newValue
     def timeString = new Date().format("h:mm a", location.timeZone)
-    
+
     if (cmd.meterType == 33) {
         if (cmd.scale == 0) {
             newValue = cmd.scaledMeterValue
@@ -275,12 +275,12 @@ def zwaveEvent(physicalgraph.zwave.commands.meterv1.MeterReport cmd) {
                 [name: "energy", value: newValue, unit: "kVAh"]
             }
         }
-        else if (cmd.scale==2) {                
+        else if (cmd.scale==2) {
             newValue = Math.round( cmd.scaledMeterValue )       // really not worth the hassle to show decimals for Watts
             if (newValue != state.powerValue) {
                 dispValue = newValue+"\nWatts"
                 sendEvent(name: "powerDisp", value: dispValue as String, unit: "")
-                
+
                 if (newValue < state.powerLow) {
                     dispValue = "Low\n"+newValue+" W\n"+timeString
                     sendEvent(name: "powerOne", value: dispValue as String, unit: "")
@@ -305,14 +305,14 @@ def zwaveEvent(physicalgraph.zwave.commands.meterv1.MeterReport cmd) {
 
                 if (newValue < state.voltsLow) {
                     dispValue = "Low\n"+String.format("%5.2f", newValue)+" V\n"+timeString
-                    sendEvent(name: "voltsOne", value: dispValue as String, unit: "")                   
+                    sendEvent(name: "voltsOne", value: dispValue as String, unit: "")
                     state.voltsLow = newValue
                 }
                 if (newValue > state.voltsHigh) {
                     dispValue = "High\n"+String.format("%5.2f", newValue)+" V\n"+timeString
-                    sendEvent(name: "voltsTwo", value: dispValue as String, unit: "")                    
+                    sendEvent(name: "voltsTwo", value: dispValue as String, unit: "")
                     state.voltsHigh = newValue
-                }                
+                }
                 state.voltsValue = newValue
                 [name: "volts", value: newValue, unit: "V"]
             }
@@ -322,7 +322,7 @@ def zwaveEvent(physicalgraph.zwave.commands.meterv1.MeterReport cmd) {
             if (newValue != state.ampsValue) {
                 dispValue = String.format("%5.2f", newValue)+"\nAmps"
                 sendEvent(name: "ampsDisp", value: dispValue as String, unit: "")
-                
+
                 if (newValue < state.ampsLow) {
                     dispValue = "Low\n"+String.format("%5.2f", newValue)+" A\n"+timeString
                     sendEvent(name: "ampsOne", value: dispValue as String, unit: "")
@@ -332,12 +332,12 @@ def zwaveEvent(physicalgraph.zwave.commands.meterv1.MeterReport cmd) {
                     dispValue = "High\n"+String.format("%5.2f", newValue)+" A\n"+timeString
                     sendEvent(name: "ampsTwo", value: dispValue as String, unit: "")
                     state.ampsHigh = newValue
-                }                
+                }
                 state.ampsValue = newValue
                 [name: "amps", value: newValue, unit: "A"]
             }
         }
-    }           
+    }
 }
 
 def zwaveEvent(physicalgraph.zwave.commands.batteryv1.BatteryReport cmd) {
@@ -371,7 +371,7 @@ def refresh() {
 def poll() {
     refresh()
 }
-    
+
 def reset() {
     log.debug "${device.name} reset"
 
@@ -381,28 +381,28 @@ def reset() {
     state.ampsLow = 999
     state.voltsHigh = 0
     state.voltsLow = 999
-    
+
     def dateString = new Date().format("m/d/YY", location.timeZone)
     def timeString = new Date().format("h:mm a", location.timeZone)
     sendEvent(name: "energyOne", value: "Since\n"+dateString+"\n"+timeString, unit: "")
-    sendEvent(name: "powerOne", value: "", unit: "")    
+    sendEvent(name: "powerOne", value: "", unit: "")
     sendEvent(name: "voltsOne", value: "", unit: "")
     sendEvent(name: "ampsOne", value: "", unit: "")
     sendEvent(name: "ampsDisp", value: "", unit: "")
     sendEvent(name: "voltsDisp", value: "", unit: "")
-    sendEvent(name: "powerDisp", value: "", unit: "")    
+    sendEvent(name: "powerDisp", value: "", unit: "")
     sendEvent(name: "energyDisp", value: "", unit: "")
     sendEvent(name: "energyTwo", value: "Cost\n--", unit: "")
-    sendEvent(name: "powerTwo", value: "", unit: "")    
+    sendEvent(name: "powerTwo", value: "", unit: "")
     sendEvent(name: "voltsTwo", value: "", unit: "")
     sendEvent(name: "ampsTwo", value: "", unit: "")
-    
+
 // No V1 available
     def cmd = delayBetween( [
         zwave.meterV2.meterReset().format(),
         zwave.meterV2.meterGet(scale: 0).format()
     ])
-    
+
     cmd
 }
 
@@ -411,6 +411,7 @@ def configure() {
     //       returned as zwaveEvents...they probably aren't implemented in the core Meter device yet.
 
     def cmd = delayBetween([
+        zwave.configurationV1.configurationSet(parameterNumber: 255, size: 4, scaledConfigurationValue: 1).format(),    // Reset All Params to Factory Default
         zwave.configurationV1.configurationSet(parameterNumber: 3, size: 1, scaledConfigurationValue: 1).format(),      // Enable selective reporting
         zwave.configurationV1.configurationSet(parameterNumber: 4, size: 2, scaledConfigurationValue: 50).format(),     // Don't send unless watts have increased by 50
         zwave.configurationV1.configurationSet(parameterNumber: 8, size: 2, scaledConfigurationValue: 10).format(),     // Or by 10% (these 3 are the default values
